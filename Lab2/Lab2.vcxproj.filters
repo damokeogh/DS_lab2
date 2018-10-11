@@ -41,9 +41,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lab2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SLinkedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

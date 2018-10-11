@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SLinkedList.h"
+#include "pch.h"
 
 
 int main() {
@@ -12,9 +13,9 @@ int main() {
 
 	SListIterator<int> start = list.begin();
 	
-	std::cout << "First element: " << *start << std::endl;
+	//std::cout << "First element: " << *start << std::endl;
 
-	std::cout << list.size() << std::endl;
+	//std::cout << list.size() << std::endl;
 	
 	system("PAUSE");
 }
