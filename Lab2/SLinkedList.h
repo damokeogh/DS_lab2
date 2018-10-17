@@ -118,7 +118,25 @@ void SLinkedList<T, InputIterator>::insertAfter(InputIterator & position, T elem
 
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::insertBefore(InputIterator & position, T element) {
-	// To be completed...
+	
+	SListNode<T>* temp = position.get();
+
+	if (temp != m_count) {
+		--position;
+		std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
+
+		newNode->setNext(temp->next());
+		// if the new node is the new end of list node
+		temp->setNext(newNode);	// newNode is now nullptr
+
+		m_count++;
+	}
+	if (temp == m_count) {
+		std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
+		m_head = temp;
+
+	}
+
 
 }
 
