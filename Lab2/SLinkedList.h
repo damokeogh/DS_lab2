@@ -93,18 +93,37 @@ void SLinkedList<T, InputIterator>::insertFirst(T element) {
 
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::insertLast(T element) {
-    // To be completed...
+    
+	std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
+
+	if (m_head == NULL) {
+		newNode->setNext(m_head);
+		// set the head node, and the tail node if needed.
+		std::swap(m_head, newNode);
+		m_tail = m_head.get();
+	}
+	else
+	{
+		SListNode<T>* temp = m_tail;
+		m_tail = newNode.get();
+		temp->setNext(newNode);
+		
+	}
+	m_count++;
 	
 }
 
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::insertAfter(InputIterator & position, T element) {
-        
+        //create pointer to current iterator position
 		SListNode<T>* temp = position.get();       
 		
+		//check if replacing after end of list
 		if (temp != nullptr) {
+			//create new node at the iterator position
 			std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
 
+			//sets pointer to next node in list
 			newNode->setNext(temp->next());
 			// if the new node is the new end of list node
 			if (newNode->next() == nullptr) {
@@ -118,24 +137,57 @@ void SLinkedList<T, InputIterator>::insertAfter(InputIterator & position, T elem
 
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::insertBefore(InputIterator & position, T element) {
+	SListNode<T>* temp= position.get();
+	SListNode<T>* previous = NULL;
+	position = begin();
+	SListNode<T>* loop = m_head.get;
+	std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
+	/*if (temp == m_head.get()) {
+		
+		newNode->setNext(temp->next);
+		m_head = newNode.get();*/
+
+	//}
+	//loop to get the pointer to the node before where i want to insert
+	/*else {
+		for (int i = 0; i < m_count; i++)
+		{
+			bool found = false;
+			++position;
+			if (position == temp) {
+				found = true;
+
+			}
+			if (found == false) {
+				previous = position.get();
+			}
+
+		}*/
 	
-	SListNode<T>* temp = position.get();
+		//code for insert after
+		//if (temp != nullptr) {
+		//	//create new node at the iterator position
+		//	std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
 
-	if (temp != m_count) {
-		--position;
-		std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
+		//	//sets pointer to next node in list
+		//	newNode->setNext(temp->next());
+		//	// if the new node is the new end of list node
+		//	if (newNode->next() == nullptr) {
+		//		m_tail = newNode.get();
+		//	}
+		//	temp->setNext(newNode);	// newNode is now nullptr
 
-		newNode->setNext(temp->next());
-		// if the new node is the new end of list node
-		temp->setNext(newNode);	// newNode is now nullptr
+		//	m_count++;
+		//}
+			
+		
 
-		m_count++;
-	}
-	if (temp == m_count) {
-		std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
-		m_head = temp;
+	//}
+	m_count++;
 
-	}
+		
+		
+	
 
 
 }
