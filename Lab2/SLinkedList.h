@@ -2,6 +2,7 @@
 
 #include <list>
 #include <memory>	// for std::unique_ptr
+#include <stack>
 
 using std::list;
 
@@ -23,8 +24,10 @@ public:
     void replace(InputIterator & position, T element) override;        
     void insertFirst(T element) override;
     void insertLast(T element) override;
+	void makeNewHead(InputIterator & position);
     void insertAfter(InputIterator & position, T element) override;  	
 	void insertBefore(InputIterator & position, T element) override;
+	void reverse();
 	InputIterator remove(InputIterator & position) override;
     int remove(T element) override;
 	
@@ -137,13 +140,83 @@ void SLinkedList<T, InputIterator>::insertAfter(InputIterator & position, T elem
 
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::insertBefore(InputIterator & position, T element) {
+	//create new node at the iterator position
+	std::unique_ptr<SListNode<T>> newNode = std::make_unique<SListNode<T>>(element, this);
+	/*SListNode<T>* pred = m_head.get();
+	SListNode<T>* temp = position.get();*/
+	if (m_head.get() == position.get()) {
+		newNode->setNext(m_head);
+		std::swap(m_head, newNode);
+	}
+	else {
+		//this loop sets pred to the preceeding node
+		SListNode<T>* previous = m_head.get();
 
+		// Set up 'previous' to point to the node one before the node we wish to delete.
+		for (; previous->next().get() != position.get(); previous = previous->next().get());
+
+		newNode->setNext(previous->next());
+		previous->setNext(newNode);
 		
-		
+
+	}
 	
+	m_count++;
 
 
 }
+
+
+//Function for Q2
+template <typename T, typename InputIterator>
+void SLinkedList<T, InputIterator>::reverse() {
+	std::stack<int> s;
+	SListIterator<T> temp = m_head.get();
+	for (int i = 0; i < m_count; i++)
+	{
+		s.push(*temp);
+		++temp;
+	}
+	temp = m_head.get();
+	for (int i = 0; i < m_count; i++)
+	{
+		replace(temp, s.top());
+		s.pop();
+		++temp;
+
+	}
+
+}
+
+//Fucntion for Q3
+template <typename T, typename InputIterator>
+void SLinkedList<T, InputIterator>::makeNewHead(InputIterator & position) 
+{
+	SListIterator<T> tempIter = m_head.get();
+	++tempIter;
+	//pointer to current head
+	SListNode<T>* temp = m_head.get();
+	SListNode<T>* temp2 = tempIter.get();
+	SListNode<T>* pos = position.get();
+
+	//pointer for looping through until node before position
+	SListNode<T>* previous = m_head.get();
+	
+
+	// Set up 'previous' to point to the node one before the node we wish to move
+	for (; previous->next().get() != position.get(); previous = previous->next().get());
+
+	//point head to position
+	m_head = pos;
+
+	//point position to head++
+	pos->setNext(temp2);
+
+	//point previous to old head
+	previous->setNext(temp);
+
+}
+
 
 template <typename T, typename InputIterator>
 InputIterator SLinkedList<T, InputIterator>::remove(InputIterator & position) {

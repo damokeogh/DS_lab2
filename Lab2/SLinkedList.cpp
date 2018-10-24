@@ -18,17 +18,37 @@ int main() {
 
 	std::cout << list.size() << std::endl;
 
-	/*++start;
-	list.insertBefore(start, 15);
-	start = list.begin;
-
-	for (int i = 0; i < list.size; i++)
+	//test code for q1
+	SListIterator<int> testIter = list.begin();
+	++testIter;
+	list.insertBefore(testIter, 15);
+	testIter = list.begin();
+	for (int i = 0; i < list.size(); i++)
 	{
-		std::cout << *start << std::endl;
-		++start;
+		std::cout << *testIter << std::endl;
+		++testIter;
+	}
 
-	}*/
-	
+	//test code for Q2
+	list.reverse();
+	testIter = list.begin();
+	for (int i = 0; i < list.size(); i++)
+	{
+		std::cout << *testIter << std::endl;
+		++testIter;
+	}
+
+	//test code for Q3
+	SListIterator<int> testIter2 = list.begin();
+	++testIter;
+	list.makeNewHead(testIter2);
+	testIter = list.begin();
+	for (int i = 0; i < list.size(); i++)
+	{
+		std::cout << *testIter << std::endl;
+		++testIter;
+	}
+
 	system("PAUSE");
 }
 
