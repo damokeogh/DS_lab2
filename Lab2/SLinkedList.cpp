@@ -28,6 +28,7 @@ int main() {
 		std::cout << *testIter << std::endl;
 		++testIter;
 	}
+	std::cout << std::endl;
 
 	//test code for Q2
 	list.reverse();
@@ -37,17 +38,33 @@ int main() {
 		std::cout << *testIter << std::endl;
 		++testIter;
 	}
+	std::cout << std::endl;
 
 	//test code for Q3
-	SListIterator<int> testIter2 = list.begin();
+	//SListIterator<int> testIter2 = list.begin();
+	testIter = list.begin();
 	++testIter;
-	list.makeNewHead(testIter2);
+	list.makeNewHead(testIter);
 	testIter = list.begin();
 	for (int i = 0; i < list.size(); i++)
 	{
 		std::cout << *testIter << std::endl;
 		++testIter;
 	}
+	std::cout << std::endl;
+
+	//test 2  for Q3
+	testIter = list.begin();
+	++testIter;
+	++testIter;
+	list.makeNewHead(testIter);
+	testIter = list.begin();
+	for (int i = 0; i < list.size(); i++)
+	{
+		std::cout << *testIter << std::endl;
+		++testIter;
+	}
+	std::cout << std::endl;
 
 	system("PAUSE");
 }

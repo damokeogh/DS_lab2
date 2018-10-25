@@ -192,11 +192,10 @@ void SLinkedList<T, InputIterator>::reverse() {
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::makeNewHead(InputIterator & position) 
 {
-	SListIterator<T> tempIter = m_head.get();
-	++tempIter;
-	//pointer to current head
-	SListNode<T>* temp = m_head.get();
-	SListNode<T>* temp2 = tempIter.get();
+	//new node to prevent lost nodes
+	std::unique_ptr<SListNode<T>> copyOfPos = std::make_unique<SListNode<T>>(*position, this);
+	
+	//pointer to passed iterator position
 	SListNode<T>* pos = position.get();
 
 	//pointer for looping through until node before position
@@ -206,14 +205,27 @@ void SLinkedList<T, InputIterator>::makeNewHead(InputIterator & position)
 	// Set up 'previous' to point to the node one before the node we wish to move
 	for (; previous->next().get() != position.get(); previous = previous->next().get());
 
-	//point head to position
-	m_head = pos;
+	if (m_head->next().get() == pos)
+	{
+		copyOfPos->setNext(m_head);
+		previous->setNext(pos->next());
+		std::swap(m_head, copyOfPos);
 
-	//point position to head++
-	pos->setNext(temp2);
+	}
+	
+	else 
+	{
+		copyOfPos->setNext(m_head->next());
 
-	//point previous to old head
-	previous->setNext(temp);
+		//this line is the problem
+		m_head->setNext(pos->next());
+
+		previous->setNext(m_head);
+
+		std::swap(m_head, copyOfPos);
+
+	}
+	
 
 }
 
