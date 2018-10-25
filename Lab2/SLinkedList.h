@@ -25,6 +25,7 @@ public:
     void insertFirst(T element) override;
     void insertLast(T element) override;
 	void makeNewHead(InputIterator & position);
+	void splice(InputIterator & position, list<T> & x);
     void insertAfter(InputIterator & position, T element) override;  	
 	void insertBefore(InputIterator & position, T element) override;
 	void reverse();
@@ -170,7 +171,7 @@ void SLinkedList<T, InputIterator>::insertBefore(InputIterator & position, T ele
 //Function for Q2
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::reverse() {
-	std::stack<int> s;
+	std::stack<T> s;
 	SListIterator<T> temp = m_head.get();
 	for (int i = 0; i < m_count; i++)
 	{
@@ -188,7 +189,7 @@ void SLinkedList<T, InputIterator>::reverse() {
 
 }
 
-//Fucntion for Q3
+//Function for Q3
 template <typename T, typename InputIterator>
 void SLinkedList<T, InputIterator>::makeNewHead(InputIterator & position) 
 {
@@ -228,6 +229,15 @@ void SLinkedList<T, InputIterator>::makeNewHead(InputIterator & position)
 	
 
 }
+
+//Function for Q4
+template <typename T, typename InputIterator>
+void SLinkedList<T, InputIterator>::splice(InputIterator & position, list<T> & x) 
+{
+
+
+}
+
 
 
 template <typename T, typename InputIterator>
